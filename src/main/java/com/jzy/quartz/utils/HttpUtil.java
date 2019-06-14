@@ -20,7 +20,7 @@ public class HttpUtil {
 		Assert.isTrue(!CollectionUtils.isEmpty(param),"参数不能为空");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(param);
-		return restTemplate.patchForObject(url, httpEntity, String.class);
+		return restTemplate.postForObject(url, httpEntity, String.class);
 	}
 
 }

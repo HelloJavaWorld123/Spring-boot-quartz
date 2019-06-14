@@ -94,8 +94,8 @@ public class OrderTask {
 									   .map(OrderPO::getTradeRecordId)
 									   .collect(Collectors.toList());
 
-		orderService.batchUpdateOrderStatus(orderIds);
-		orderService.batchUpdateTradeRecordStatus(tradeRecordIds);
+//		orderService.batchUpdateOrderStatus(orderIds);
+//		orderService.batchUpdateTradeRecordStatus(tradeRecordIds);
 
 		log.info("处理ximei支付失败的订单任务执行结束");
 	}

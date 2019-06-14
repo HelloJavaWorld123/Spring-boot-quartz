@@ -19,6 +19,10 @@
         <druid.version>1.1.16</druid.version>
         <mybatis.version>2.0.1</mybatis.version>
         <commons.version>4.1</commons.version>
+        <merapi.version>4.0</merapi.version>
+        <dom4j.version>2.0.1</dom4j.version>
+        <ximei.version>1.0</ximei.version>
+        <bcprov.version>1.60</bcprov.version>
         <fastjson.version>1.2.58</fastjson.version>
         <mybatis.typehandlers.version>1.0.2</mybatis.typehandlers.version>
     </properties>
@@ -79,7 +83,7 @@
         <dependency>
             <groupId>org.dom4j</groupId>
             <artifactId>dom4j</artifactId>
-            <version>2.0.1</version>
+            <version>${dom4j.version}</version>
         </dependency>
 
 
@@ -93,10 +97,40 @@
         <dependency>
             <groupId>payment</groupId>
             <artifactId>merapi</artifactId>
-            <version>4.0</version>
+            <version>${merapi.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.cfca</groupId>
+            <artifactId>PKIBaseRRTX</artifactId>
+            <version>${ximei.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.topca.api</groupId>
+            <artifactId>top-certapi</artifactId>
+            <version>${ximei.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.topca.security</groupId>
+            <artifactId>top-security</artifactId>
+            <version>${ximei.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.topca</groupId>
+            <artifactId>top-commons</artifactId>
+            <version>${ximei.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.topca</groupId>
+            <artifactId>top-core</artifactId>
+            <version>${ximei.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bcprov.version}</version>
+        </dependency>
   </dependencies>
 
     <build>

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://rm-uf6g5814m39g10u95:mysql:rds:aliyuncs:com/test_mall?autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
+    url: jdbc:mysql://rm-uf6g5814m39g10u95:mysql:rds:aliyuncs:com/test_mall?autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=true
     password: wO9jvo1159al
     username: test_mall
     driver-class-name: com.mysql.jdbc.Driver

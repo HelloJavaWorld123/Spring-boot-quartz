@@ -1,7 +1,6 @@
 package com.jzy.quartz.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jzy.quartz.po.OrderPO;
 import com.jzy.quartz.po.XiMeiResultPO;
 import com.rrtx.mer.bean.ProcessMessage;
@@ -13,8 +12,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import javax.xml.transform.TransformerFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,20 +28,20 @@ import java.util.Map;
  **/
 @Data
 @Slf4j
+@Component
 public class XiMeiUtils {
 
+	public static String version;
 
-	private static String version;
+	public static String merchantId;
 
-	private static String merchantId;
+	public static String orderQueryUrl;
 
-	private static String orderQueryUrl;
+	public static String keyPassword;
 
-	private static String keyPassword;
+	public static String keyPath;
 
-	private static String keyPath;
-
-	private static String orderQueryInterfaceName;
+	public static String orderQueryInterfaceName;
 
 
 	/**
@@ -77,7 +76,7 @@ public class XiMeiUtils {
 					Map<String, String> param = getPostParam(item);
 
 					//发送post 请求
-					String result = HttpUtil.post(getOrderQueryUrl(),param);
+					String result = HttpUtil.post(XiMeiUtils.orderQueryUrl,param);
 					log.info("请求返回的结果是:{}", result);
 
 					//当前是否满足更改状态
@@ -91,6 +90,7 @@ public class XiMeiUtils {
 	private static boolean needChangeStatus(String result) {
 		if(StringUtils.isNotBlank(result)){
 			XiMeiResultPO po = JSON.parseObject(ProcessMessage.Base64Decode(result), XiMeiResultPO.class);
+			log.info("返回的结果是：{}",po.toString());
 			if(StringUtils.isNotBlank(po.getTranData())){
 				String resultXml = new String(ProcessMessage.Base64Decode(po.getTranData()));
 				try {
@@ -113,18 +113,18 @@ public class XiMeiUtils {
 
 	private static Map<String, String> getPostParam(OrderPO item) {
 		//组装请求的数据
-		String requestData = String.format(getRequestModel(), getMerchantId(), item.getOutTradeNo(), item.getMarkId());
+		String requestData = String.format(getRequestModel(), XiMeiUtils.merchantId, item.getOutTradeNo(), item.getMarkId());
 
 		//对请求的数据进行签名 以及 base64 编码
-		byte[] bytes = ProcessMessage.signMessage(requestData, getKeyPath(), getKeyPassword());
+		byte[] bytes = ProcessMessage.signMessage(requestData, XiMeiUtils.keyPath, XiMeiUtils.keyPassword);
 		String merSignMsg = new String(bytes, StandardCharsets.UTF_8);
 		String tranDataBase64 = ProcessMessage.Base64Encode(requestData.getBytes());
 
 		Map<String, String> param = new HashMap<>(5);
-		param.put("interfaceName", getOrderQueryInterfaceName());
+		param.put("interfaceName", XiMeiUtils.orderQueryInterfaceName);
 		param.put("tranData", tranDataBase64);
 		param.put("merSignMsg", merSignMsg);
-		param.put("merchantId", getMerchantId());
+		param.put("merchantId", XiMeiUtils.merchantId);
 		return param;
 	}
 
@@ -150,58 +150,34 @@ public class XiMeiUtils {
 		return StringUtils.startsWith(item.getMarkId(), "TK");
 	}
 
-	public static String getVersion() {
-		return version;
-	}
-
 	@Value("${ximeipay.version}")
-	public static void setVersion(String version) {
+	public void setVersion(String version) {
 		XiMeiUtils.version = version;
 	}
 
-	public static String getMerchantId() {
-		return merchantId;
-	}
-
 	@Value("${ximeipay.merchantId}")
-	public static void setMerchantId(String merchantId) {
+	public void setMerchantId(String merchantId) {
 		XiMeiUtils.merchantId = merchantId;
 	}
 
-	public static String getOrderQueryUrl() {
-		return orderQueryUrl;
-	}
-
 	@Value("${ximeipay.orderQueryUrl}")
-	public static void setOrderQueryUrl(String orderQueryUrl) {
+	public void setOrderQueryUrl(String orderQueryUrl) {
 		XiMeiUtils.orderQueryUrl = orderQueryUrl;
 	}
 
-	public static String getOrderQueryInterfaceName() {
-		return orderQueryInterfaceName;
-	}
-
 	@Value("${ximeipay.orderQueryInterfaceName}")
-	public static void setOrderQueryInterfaceName(String orderQueryInterfaceName) {
+	public void setOrderQueryInterfaceName(String orderQueryInterfaceName) {
 		XiMeiUtils.orderQueryInterfaceName = orderQueryInterfaceName;
 	}
 
-
-	public static String getKeyPassword() {
-		return keyPassword;
-	}
-
 	@Value("${ximeipay.keyPassword}")
-	public static void setKeyPassword(String keyPassword) {
+	public void setKeyPassword(String keyPassword) {
 		XiMeiUtils.keyPassword = keyPassword;
 	}
 
-	public static String getKeyPath() {
-		return keyPath;
-	}
 
 	@Value("${ximeipay.keyPath}")
-	public static void setKeyPath(String keyPath) {
+	public void setKeyPath(String keyPath) {
 		XiMeiUtils.keyPath = keyPath;
 	}
 }

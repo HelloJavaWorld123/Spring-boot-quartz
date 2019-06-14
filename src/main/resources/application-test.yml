@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://47.102.111.86:4005/test_mall?autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=true
+    password: wO9jvo1159al
+    username: test_mall
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      enable: true
+      initial-size: 50
+      max-active: 100
+      min-idle: 50
+      max-wait: 60000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 180000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'X'
+      validation-query-timeout: 180
+      filters: wall,stat,sl4j2
+      db-type: mysql
+      async-init: true
+
+ximeipay:
+  keyPath: F:\Files\jzyxm.pfx
