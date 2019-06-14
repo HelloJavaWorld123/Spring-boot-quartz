@@ -6,6 +6,7 @@ import com.jzy.quartz.po.XiMeiResultPO;
 import com.rrtx.mer.bean.ProcessMessage;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -16,9 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author : RXK
@@ -73,14 +72,13 @@ public class XiMeiUtils {
 				.filter(XiMeiUtils::isXiMeiOrder)
 				.forEach(item -> {
 					//组装请求数据
-					Map<String, String> param = getPostParam(item);
+					PostMethod postMethod = getPostParam(item);
 
 					//发送post 请求
-//					String result = HttpUtil.post(XiMeiUtils.orderQueryUrl,param);
-					String result = HttpUtil.httpclientPost(XiMeiUtils.orderQueryUrl, param);
+					String result = HttpUtil.httpclientPost(postMethod);
 					log.info("请求返回的结果是:{}", result);
 
-					//当前是否满足更改状态
+
 					if(needChangeStatus(result)){
 						successRefund.add(item);
 					}
@@ -112,7 +110,7 @@ public class XiMeiUtils {
 		return false;
 	}
 
-	private static Map<String, String> getPostParam(OrderPO item) {
+	private static PostMethod getPostParam(OrderPO item) {
 		//组装请求的数据
 		String requestData = String.format(getRequestModel(), XiMeiUtils.merchantId, item.getOutTradeNo(), item.getMarkId());
 
@@ -121,12 +119,14 @@ public class XiMeiUtils {
 		String merSignMsg = new String(bytes, StandardCharsets.UTF_8);
 		String tranDataBase64 = ProcessMessage.Base64Encode(requestData.getBytes());
 
-		Map<String, String> param = new HashMap<>(5);
-		param.put("interfaceName", XiMeiUtils.orderQueryInterfaceName);
-		param.put("tranData", tranDataBase64);
-		param.put("merSignMsg", merSignMsg);
-		param.put("merchantId", XiMeiUtils.merchantId);
-		return param;
+		PostMethod mypost = new PostMethod(XiMeiUtils.orderQueryUrl);
+		mypost.addParameter("interfaceName",XiMeiUtils.orderQueryInterfaceName);
+		mypost.addParameter("version", XiMeiUtils.version);
+		mypost.addParameter("tranData", tranDataBase64);
+		mypost.addParameter("merSignMsg", merSignMsg);
+		mypost.addParameter("merchantId", XiMeiUtils.merchantId);
+
+		return mypost;
 	}
 
 	private static String getTranStat(String resultXml) throws DocumentException {
