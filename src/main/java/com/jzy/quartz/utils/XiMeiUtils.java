@@ -76,7 +76,8 @@ public class XiMeiUtils {
 					Map<String, String> param = getPostParam(item);
 
 					//发送post 请求
-					String result = HttpUtil.post(XiMeiUtils.orderQueryUrl,param);
+//					String result = HttpUtil.post(XiMeiUtils.orderQueryUrl,param);
+					String result = HttpUtil.httpclientPost(XiMeiUtils.orderQueryUrl, param);
 					log.info("请求返回的结果是:{}", result);
 
 					//当前是否满足更改状态
