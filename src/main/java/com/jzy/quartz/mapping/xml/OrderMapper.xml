@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzy.quartz.mapping.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.jzy.quartz.model.Order">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="CHAR" property="code"/>
+        <result column="out_trade_no" jdbcType="CHAR" property="outTradeNo"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="app_id" jdbcType="BIGINT" property="appId"/>
+        <result column="apt_id" jdbcType="BIGINT" property="aptId"/>
+        <result column="sup_no" jdbcType="CHAR" property="supNo"/>
+        <result column="sup_price" jdbcType="DECIMAL" property="supPrice"/>
+        <result column="sup_status" jdbcType="TINYINT" property="supStatus"/>
+        <result column="discount" jdbcType="DECIMAL" property="discount"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="total_fee" jdbcType="DECIMAL" property="totalFee"/>
+        <result column="price_type_name" jdbcType="CHAR" property="priceTypeName"/>
+        <result column="price_type_unit" jdbcType="CHAR" property="priceTypeUnit"/>
+        <result column="acct_type" jdbcType="CHAR" property="accType"/>
+        <result column="account" jdbcType="CHAR" property="account"/>
+        <result column="game_account" jdbcType="CHAR" property="gameAccount"/>
+        <result column="game_area" jdbcType="CHAR" property="gameArea"/>
+        <result column="game_serv" jdbcType="CHAR" property="gameSery"/>
+        <result column="trade_method" jdbcType="TINYINT" property="tradeMethod"/>
+        <result column="trade_code" jdbcType="CHAR" property="tradeCode"/>
+        <result column="trade_fee" jdbcType="DECIMAL" property="tradeFee"/>
+        <result column="trade_status" jdbcType="CHAR" property="tradeStatus"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="invoice_status" jdbcType="TINYINT" property="invoiceStatus"/>
+        <result column="remark" jdbcType="CHAR" property="remark"/>
+        <result column="dealer_id" jdbcType="BIGINT" property="dealerId"/>
+        <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
+        <result column="modifier_id" jdbcType="BIGINT" property="modifierId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="recharge_mode" jdbcType="TINYINT" property="rechargeMode"/>
+        <result column="dealer_price" jdbcType="DECIMAL" property="dealerPrice"/>
+        <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, code, out_trade_no, user_id, app_id, apt_id, sup_no, sup_price, sup_status, discount, 
+    price, number, status, type, total_fee, price_type_name, price_type_unit, acct_type, 
+    account, game_account, game_area, game_serv, trade_method, trade_code, trade_fee, 
+    trade_status, del_flag, invoice_status, remark, dealer_id, creator_id, modifier_id, 
+    create_time, modify_time, recharge_mode, dealer_price, pay_time, finish_time
+  </sql>
+    <select id="selectByExample" parameterType="com.jzy.quartz.model.OrderExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from order
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.jzy.quartz.model.OrderExample">
+        delete from order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.jzy.quartz.model.Order">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into order (code, out_trade_no, user_id,
+        app_id, apt_id, sup_no, sup_price,
+        sup_status, discount, price,
+        number, status, type,
+        total_fee, price_type_name, price_type_unit,
+        acct_type, account, game_account,
+        game_area, game_serv, trade_method,
+        trade_code, trade_fee, trade_status,
+        del_flag, invoice_status, remark,
+        dealer_id, creator_id, modifier_id,
+        create_time, modify_time, recharge_mode,
+        dealer_price, pay_time, finish_time
+        )
+        values (#{code,jdbcType=CHAR}, #{outTradeNo,jdbcType=CHAR}, #{userId,jdbcType=VARCHAR},
+        #{appId,jdbcType=BIGINT}, #{aptId,jdbcType=BIGINT}, #{supNo,jdbcType=CHAR}, #{supPrice,jdbcType=DECIMAL},
+        #{supStatus,jdbcType=TINYINT}, #{discount,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL},
+        #{number,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{type,jdbcType=TINYINT},
+        #{totalFee,jdbcType=DECIMAL}, #{priceTypeName,jdbcType=CHAR}, #{priceTypeUnit,jdbcType=CHAR},
+        #{accType,jdbcType=CHAR}, #{account,jdbcType=CHAR}, #{gameAccount,jdbcType=CHAR},
+        #{gameArea,jdbcType=CHAR}, #{gameSery,jdbcType=CHAR}, #{tradeMethod,jdbcType=TINYINT},
+        #{tradeCode,jdbcType=CHAR}, #{tradeFee,jdbcType=DECIMAL}, #{tradeStatus,jdbcType=CHAR},
+        #{delFlag,jdbcType=TINYINT}, #{invoiceStatus,jdbcType=TINYINT}, #{remark,jdbcType=CHAR},
+        #{dealerId,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, #{modifierId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{rechargeMode,jdbcType=TINYINT},
+        #{dealerPrice,jdbcType=DECIMAL}, #{payTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.jzy.quartz.model.Order">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="aptId != null">
+                apt_id,
+            </if>
+            <if test="supNo != null">
+                sup_no,
+            </if>
+            <if test="supPrice != null">
+                sup_price,
+            </if>
+            <if test="supStatus != null">
+                sup_status,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="totalFee != null">
+                total_fee,
+            </if>
+            <if test="priceTypeName != null">
+                price_type_name,
+            </if>
+            <if test="priceTypeUnit != null">
+                price_type_unit,
+            </if>
+            <if test="accType != null">
+                acct_type,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="gameAccount != null">
+                game_account,
+            </if>
+            <if test="gameArea != null">
+                game_area,
+            </if>
+            <if test="gameSery != null">
+                game_serv,
+            </if>
+            <if test="tradeMethod != null">
+                trade_method,
+            </if>
+            <if test="tradeCode != null">
+                trade_code,
+            </if>
+            <if test="tradeFee != null">
+                trade_fee,
+            </if>
+            <if test="tradeStatus != null">
+                trade_status,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="invoiceStatus != null">
+                invoice_status,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="dealerId != null">
+                dealer_id,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="modifierId != null">
+                modifier_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="rechargeMode != null">
+                recharge_mode,
+            </if>
+            <if test="dealerPrice != null">
+                dealer_price,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="finishTime != null">
+                finish_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=CHAR},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=BIGINT},
+            </if>
+            <if test="aptId != null">
+                #{aptId,jdbcType=BIGINT},
+            </if>
+            <if test="supNo != null">
+                #{supNo,jdbcType=CHAR},
+            </if>
+            <if test="supPrice != null">
+                #{supPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="supStatus != null">
+                #{supStatus,jdbcType=TINYINT},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="totalFee != null">
+                #{totalFee,jdbcType=DECIMAL},
+            </if>
+            <if test="priceTypeName != null">
+                #{priceTypeName,jdbcType=CHAR},
+            </if>
+            <if test="priceTypeUnit != null">
+                #{priceTypeUnit,jdbcType=CHAR},
+            </if>
+            <if test="accType != null">
+                #{accType,jdbcType=CHAR},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=CHAR},
+            </if>
+            <if test="gameAccount != null">
+                #{gameAccount,jdbcType=CHAR},
+            </if>
+            <if test="gameArea != null">
+                #{gameArea,jdbcType=CHAR},
+            </if>
+            <if test="gameSery != null">
+                #{gameSery,jdbcType=CHAR},
+            </if>
+            <if test="tradeMethod != null">
+                #{tradeMethod,jdbcType=TINYINT},
+            </if>
+            <if test="tradeCode != null">
+                #{tradeCode,jdbcType=CHAR},
+            </if>
+            <if test="tradeFee != null">
+                #{tradeFee,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeStatus != null">
+                #{tradeStatus,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="invoiceStatus != null">
+                #{invoiceStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=CHAR},
+            </if>
+            <if test="dealerId != null">
+                #{dealerId,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="modifierId != null">
+                #{modifierId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rechargeMode != null">
+                #{rechargeMode,jdbcType=TINYINT},
+            </if>
+            <if test="dealerPrice != null">
+                #{dealerPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.jzy.quartz.model.OrderExample" resultType="java.lang.Long">
+        select count(*) from order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="selectByStatus" resultMap="BaseResultMap">
+    SELECT
+        id,
+        `status`,
+        create_time
+    FROM
+      `order`
+    WHERE
+        `status` = #{orderStatus}
+    AND
+        del_flag = 0
+  </select>
+
+    <select id="findByTypeAndStatus" resultType="com.jzy.quartz.po.OrderPO">
+        SELECT
+            r.id AS tradeRecordId,
+            r.mark_id AS markId,
+            o.id AS orderId,
+            o.out_trade_no AS outTradeNo
+        FROM trade_record r LEFT JOIN `order` o ON r.operator = o.out_trade_no
+        WHERE
+            r.trusteeship = ${orderMethod}
+        AND
+            r.del_flag =0
+        AND
+            r.type = ${tradeRecordType}
+        AND
+            r.`status` = ${tradeRecordStatus}
+        AND
+            o.del_flag = 0
+        AND
+            o.`status` = ${orderStatus}
+        AND
+            o.trade_method = ${orderMethod}
+  </select>
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+        update order
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.code != null">
+                code = #{record.code,jdbcType=CHAR},
+            </if>
+            <if test="record.outTradeNo != null">
+                out_trade_no = #{record.outTradeNo,jdbcType=CHAR},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.appId != null">
+                app_id = #{record.appId,jdbcType=BIGINT},
+            </if>
+            <if test="record.aptId != null">
+                apt_id = #{record.aptId,jdbcType=BIGINT},
+            </if>
+            <if test="record.supNo != null">
+                sup_no = #{record.supNo,jdbcType=CHAR},
+            </if>
+            <if test="record.supPrice != null">
+                sup_price = #{record.supPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="record.supStatus != null">
+                sup_status = #{record.supStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.discount != null">
+                discount = #{record.discount,jdbcType=DECIMAL},
+            </if>
+            <if test="record.price != null">
+                price = #{record.price,jdbcType=DECIMAL},
+            </if>
+            <if test="record.number != null">
+                number = #{record.number,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=TINYINT},
+            </if>
+            <if test="record.totalFee != null">
+                total_fee = #{record.totalFee,jdbcType=DECIMAL},
+            </if>
+            <if test="record.priceTypeName != null">
+                price_type_name = #{record.priceTypeName,jdbcType=CHAR},
+            </if>
+            <if test="record.priceTypeUnit != null">
+                price_type_unit = #{record.priceTypeUnit,jdbcType=CHAR},
+            </if>
+            <if test="record.accType != null">
+                acct_type = #{record.accType,jdbcType=CHAR},
+            </if>
+            <if test="record.account != null">
+                account = #{record.account,jdbcType=CHAR},
+            </if>
+            <if test="record.gameAccount != null">
+                game_account = #{record.gameAccount,jdbcType=CHAR},
+            </if>
+            <if test="record.gameArea != null">
+                game_area = #{record.gameArea,jdbcType=CHAR},
+            </if>
+            <if test="record.gameSery != null">
+                game_serv = #{record.gameSery,jdbcType=CHAR},
+            </if>
+            <if test="record.tradeMethod != null">
+                trade_method = #{record.tradeMethod,jdbcType=TINYINT},
+            </if>
+            <if test="record.tradeCode != null">
+                trade_code = #{record.tradeCode,jdbcType=CHAR},
+            </if>
+            <if test="record.tradeFee != null">
+                trade_fee = #{record.tradeFee,jdbcType=DECIMAL},
+            </if>
+            <if test="record.tradeStatus != null">
+                trade_status = #{record.tradeStatus,jdbcType=CHAR},
+            </if>
+            <if test="record.delFlag != null">
+                del_flag = #{record.delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="record.invoiceStatus != null">
+                invoice_status = #{record.invoiceStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark,jdbcType=CHAR},
+            </if>
+            <if test="record.dealerId != null">
+                dealer_id = #{record.dealerId,jdbcType=BIGINT},
+            </if>
+            <if test="record.creatorId != null">
+                creator_id = #{record.creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="record.modifierId != null">
+                modifier_id = #{record.modifierId,jdbcType=BIGINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.modifyTime != null">
+                modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.rechargeMode != null">
+                recharge_mode = #{record.rechargeMode,jdbcType=TINYINT},
+            </if>
+            <if test="record.dealerPrice != null">
+                dealer_price = #{record.dealerPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="record.payTime != null">
+                pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.finishTime != null">
+                finish_time = #{record.finishTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update order
+        set id = #{record.id,jdbcType=VARCHAR},
+        code = #{record.code,jdbcType=CHAR},
+        out_trade_no = #{record.outTradeNo,jdbcType=CHAR},
+        user_id = #{record.userId,jdbcType=VARCHAR},
+        app_id = #{record.appId,jdbcType=BIGINT},
+        apt_id = #{record.aptId,jdbcType=BIGINT},
+        sup_no = #{record.supNo,jdbcType=CHAR},
+        sup_price = #{record.supPrice,jdbcType=DECIMAL},
+        sup_status = #{record.supStatus,jdbcType=TINYINT},
+        discount = #{record.discount,jdbcType=DECIMAL},
+        price = #{record.price,jdbcType=DECIMAL},
+        number = #{record.number,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=TINYINT},
+        type = #{record.type,jdbcType=TINYINT},
+        total_fee = #{record.totalFee,jdbcType=DECIMAL},
+        price_type_name = #{record.priceTypeName,jdbcType=CHAR},
+        price_type_unit = #{record.priceTypeUnit,jdbcType=CHAR},
+        acct_type = #{record.accType,jdbcType=CHAR},
+        account = #{record.account,jdbcType=CHAR},
+        game_account = #{record.gameAccount,jdbcType=CHAR},
+        game_area = #{record.gameArea,jdbcType=CHAR},
+        game_serv = #{record.gameSery,jdbcType=CHAR},
+        trade_method = #{record.tradeMethod,jdbcType=TINYINT},
+        trade_code = #{record.tradeCode,jdbcType=CHAR},
+        trade_fee = #{record.tradeFee,jdbcType=DECIMAL},
+        trade_status = #{record.tradeStatus,jdbcType=CHAR},
+        del_flag = #{record.delFlag,jdbcType=TINYINT},
+        invoice_status = #{record.invoiceStatus,jdbcType=TINYINT},
+        remark = #{record.remark,jdbcType=CHAR},
+        dealer_id = #{record.dealerId,jdbcType=BIGINT},
+        creator_id = #{record.creatorId,jdbcType=BIGINT},
+        modifier_id = #{record.modifierId,jdbcType=BIGINT},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+        recharge_mode = #{record.rechargeMode,jdbcType=TINYINT},
+        dealer_price = #{record.dealerPrice,jdbcType=DECIMAL},
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+        finish_time = #{record.finishTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jzy.quartz.model.Order">
+        update order
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=CHAR},
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no = #{outTradeNo,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=BIGINT},
+            </if>
+            <if test="aptId != null">
+                apt_id = #{aptId,jdbcType=BIGINT},
+            </if>
+            <if test="supNo != null">
+                sup_no = #{supNo,jdbcType=CHAR},
+            </if>
+            <if test="supPrice != null">
+                sup_price = #{supPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="supStatus != null">
+                sup_status = #{supStatus,jdbcType=TINYINT},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="totalFee != null">
+                total_fee = #{totalFee,jdbcType=DECIMAL},
+            </if>
+            <if test="priceTypeName != null">
+                price_type_name = #{priceTypeName,jdbcType=CHAR},
+            </if>
+            <if test="priceTypeUnit != null">
+                price_type_unit = #{priceTypeUnit,jdbcType=CHAR},
+            </if>
+            <if test="accType != null">
+                acct_type = #{accType,jdbcType=CHAR},
+            </if>
+            <if test="account != null">
+                account = #{account,jdbcType=CHAR},
+            </if>
+            <if test="gameAccount != null">
+                game_account = #{gameAccount,jdbcType=CHAR},
+            </if>
+            <if test="gameArea != null">
+                game_area = #{gameArea,jdbcType=CHAR},
+            </if>
+            <if test="gameSery != null">
+                game_serv = #{gameSery,jdbcType=CHAR},
+            </if>
+            <if test="tradeMethod != null">
+                trade_method = #{tradeMethod,jdbcType=TINYINT},
+            </if>
+            <if test="tradeCode != null">
+                trade_code = #{tradeCode,jdbcType=CHAR},
+            </if>
+            <if test="tradeFee != null">
+                trade_fee = #{tradeFee,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeStatus != null">
+                trade_status = #{tradeStatus,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="invoiceStatus != null">
+                invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=CHAR},
+            </if>
+            <if test="dealerId != null">
+                dealer_id = #{dealerId,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="modifierId != null">
+                modifier_id = #{modifierId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rechargeMode != null">
+                recharge_mode = #{rechargeMode,jdbcType=TINYINT},
+            </if>
+            <if test="dealerPrice != null">
+                dealer_price = #{dealerPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jzy.quartz.model.Order">
+    update order
+    set code = #{code,jdbcType=CHAR},
+      out_trade_no = #{outTradeNo,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=BIGINT},
+      apt_id = #{aptId,jdbcType=BIGINT},
+      sup_no = #{supNo,jdbcType=CHAR},
+      sup_price = #{supPrice,jdbcType=DECIMAL},
+      sup_status = #{supStatus,jdbcType=TINYINT},
+      discount = #{discount,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      number = #{number,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      price_type_name = #{priceTypeName,jdbcType=CHAR},
+      price_type_unit = #{priceTypeUnit,jdbcType=CHAR},
+      acct_type = #{accType,jdbcType=CHAR},
+      account = #{account,jdbcType=CHAR},
+      game_account = #{gameAccount,jdbcType=CHAR},
+      game_area = #{gameArea,jdbcType=CHAR},
+      game_serv = #{gameSery,jdbcType=CHAR},
+      trade_method = #{tradeMethod,jdbcType=TINYINT},
+      trade_code = #{tradeCode,jdbcType=CHAR},
+      trade_fee = #{tradeFee,jdbcType=DECIMAL},
+      trade_status = #{tradeStatus,jdbcType=CHAR},
+      del_flag = #{delFlag,jdbcType=TINYINT},
+      invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=CHAR},
+      dealer_id = #{dealerId,jdbcType=BIGINT},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      recharge_mode = #{rechargeMode,jdbcType=TINYINT},
+      dealer_price = #{dealerPrice,jdbcType=DECIMAL},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="orderList" item="order" separator=";">
+            UPDATE `order`
+            SET
+            `status` = #{order.status},
+            modify_time = #{order.modifyTime}
+            WHERE id = #{order.id}
+        </foreach>
+    </update>
+    <update id="batchUpdateOrderAndTradeRecord">
+        <foreach collection="orderPOS" item="orderPo" separator=";">
+
+        </foreach>
+    </update>
+
+    <update id="batchUpdateOrderStatus">
+        <foreach collection="orderIds" item="orderId" separator=";">
+            UPDATE
+            `order`
+            SET
+            `status` = 5,
+            modify_time = NOW()
+            WHERE
+            id = #{orderId}
+        </foreach>
+    </update>
+    <update id="batchUpdateTradeRecordStatus">
+        <foreach collection="tradeRecordIds" item="tradeRecordId" separator=";">
+            UPDATE
+                trade_record
+            SET
+                `status` = 4,
+                modify_time = NOW()
+            WHERE
+                id = ${tradeRecordId}
+        </foreach>
+    </update>
+</mapper>

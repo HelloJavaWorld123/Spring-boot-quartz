@@ -1,0 +1,22 @@
+server:
+  port: 18801
+spring:
+  profiles:
+    active: local
+
+
+mybatis:
+  mapper-locations: classpath:com/jzy/quartz/mapping/xml/**
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+
+ximeipay:
+  version: WAP1.0
+  merchantId: M100000040
+  keyPassword: jiazhiyi
+  keyPath: /opt/package_manage/package_backup/jzyxm.pfx
+  orderQueryUrl: https://cpay.westcoal.com.cn/pay/OrderDealAction.queryOrder.do
+  orderQueryInterfaceName: queryOrder
