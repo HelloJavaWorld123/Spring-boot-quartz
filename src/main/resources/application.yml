@@ -6,7 +6,7 @@ spring:
 
 
 mybatis:
-  mapper-locations: classpath:com/jzy/quartz/mapping/xml/**
+  mapper-locations: classpath*:com/jzy/quartz/mapping/xml/*
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false

@@ -5,7 +5,7 @@
     <property name="FILE_LOG_PATTERN" value="%d{${LOG_DATEFORMAT_PATTERN}} [%thread] [%-5level] --- %logger : %msg%n"/>
     <property name="CONSOLE_LOG_PATTERN" value="%d{${LOG_DATEFORMAT_PATTERN}} [%thread] [%-5level] --- %logger : %msg%n"/>
     <property name="LOG_FILE_NAME" value="jzy-quartz.log"/>
-    <property name="LOG_FILE_PATH" value="/server/quartz/logs"/>
+    <property name="LOG_FILE_PATH" value="/server/quartz/logs/"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
