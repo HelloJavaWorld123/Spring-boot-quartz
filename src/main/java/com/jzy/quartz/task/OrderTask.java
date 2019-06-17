@@ -65,8 +65,8 @@ public class OrderTask {
 	 * 请求ximei 查询当前订单 退款是否成功
 	 * 成功后改变订单状态 以及 交易记录 表
 	 */
-	@Scheduled(cron = "0/10 * * * * *")
-//	@Scheduled(cron = "0 0 5 * * ? *")
+//	@Scheduled(cron = "0/1 * * * * *")
+	@Scheduled(cron = "0 0 5 * * *")
 	public void handleOrderRefund(){
 		log.info("开始执行支付失败的订单任务");
 
@@ -94,8 +94,8 @@ public class OrderTask {
 									   .map(OrderPO::getTradeRecordId)
 									   .collect(Collectors.toList());
 
-//		orderService.batchUpdateOrderStatus(orderIds);
-//		orderService.batchUpdateTradeRecordStatus(tradeRecordIds);
+		orderService.batchUpdateOrderStatus(orderIds);
+		orderService.batchUpdateTradeRecordStatus(tradeRecordIds);
 
 		log.info("处理ximei支付失败的订单任务执行结束");
 	}

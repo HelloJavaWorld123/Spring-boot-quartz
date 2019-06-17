@@ -441,6 +441,7 @@
             o.`status` = ${orderStatus}
         AND
             o.trade_method = ${orderMethod}
+        limit 1
   </select>
 
 
@@ -802,7 +803,7 @@
                 `status` = 4,
                 modify_time = NOW()
             WHERE
-                id = ${tradeRecordId}
+                id = #{tradeRecordId}
         </foreach>
     </update>
 </mapper>

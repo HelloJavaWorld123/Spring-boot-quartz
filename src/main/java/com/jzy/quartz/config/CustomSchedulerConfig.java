@@ -2,10 +2,12 @@ package com.jzy.quartz.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author : RXK
@@ -19,22 +21,18 @@ public class CustomSchedulerConfig implements SchedulingConfigurer {
 
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-		taskRegistrar.setScheduler(taskExecutor());
+		taskRegistrar.setScheduler(taskScheduler());
 	}
 
 	@Bean
-	public Executor  taskExecutor(){
-		return new ScheduledThreadPoolExecutor(10,threadFactory(),rejectedExecutionHandler());
-	}
-
-	@Bean
-	public RejectedExecutionHandler rejectedExecutionHandler(){
-		return new ThreadPoolExecutor.CallerRunsPolicy();
-	}
-
-	@Bean
-	public ThreadFactory threadFactory(){
-		return Executors.defaultThreadFactory();
+	public TaskScheduler taskScheduler(){
+		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+		scheduler.setPoolSize(20);
+		scheduler.setWaitForTasksToCompleteOnShutdown(true);
+		scheduler.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
+		scheduler.setThreadNamePrefix("jzy-quartz-");
+		scheduler.afterPropertiesSet();
+		return scheduler;
 	}
 
 }

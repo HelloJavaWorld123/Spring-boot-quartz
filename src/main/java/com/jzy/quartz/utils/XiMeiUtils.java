@@ -1,6 +1,7 @@
 package com.jzy.quartz.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.jzy.quartz.enums.ThirdOrderStatusEnum;
 import com.jzy.quartz.po.OrderPO;
 import com.jzy.quartz.po.XiMeiResultPO;
 import com.rrtx.mer.bean.ProcessMessage;
@@ -73,9 +74,12 @@ public class XiMeiUtils {
 				.forEach(item -> {
 					//组装请求数据
 					PostMethod postMethod = getPostParam(item);
+//					Map<String, String> param = getPostParam(item);
+
 
 					//发送post 请求
 					String result = HttpUtil.httpclientPost(postMethod);
+//					String result = HttpUtil.post(orderQueryUrl, param);
 					log.info("请求返回的结果是:{}", result);
 
 
@@ -96,7 +100,7 @@ public class XiMeiUtils {
 					String tranStat = getTranStat(resultXml);
 					if(StringUtils.isNotBlank(tranStat)){
 						int stat = Integer.parseInt(tranStat);
-						if(stat == 31){
+						if(stat == ThirdOrderStatusEnum.XIMEI_REFUND_SUCCESS.getState()){
 							return true;
 						}
 					}
@@ -128,6 +132,26 @@ public class XiMeiUtils {
 
 		return mypost;
 	}
+
+//	private static Map<String,String> getPostParam(OrderPO item) {
+//		//组装请求的数据
+//		String requestData = String.format(getRequestModel(), XiMeiUtils.merchantId, item.getOutTradeNo(), item.getMarkId());
+//
+//		//对请求的数据进行签名 以及 base64 编码
+//		byte[] bytes = ProcessMessage.signMessage(requestData, XiMeiUtils.keyPath, XiMeiUtils.keyPassword);
+//		String merSignMsg = new String(bytes, StandardCharsets.UTF_8);
+//		String tranDataBase64 = ProcessMessage.Base64Encode(requestData.getBytes());
+//
+//		Map<String, String> param = new HashMap<>(5);
+//		param.put("interfaceName",XiMeiUtils.orderQueryInterfaceName);
+//		param.put("version", XiMeiUtils.version);
+//		param.put("tranData", tranDataBase64);
+//		param.put("merSignMsg", merSignMsg);
+//		param.put("merchantId", XiMeiUtils.merchantId);
+//
+//		return param;
+//	}
+
 
 	private static String getTranStat(String resultXml) throws DocumentException {
 		Document document = DocumentHelper.parseText(resultXml);
