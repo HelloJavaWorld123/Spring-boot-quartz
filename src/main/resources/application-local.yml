@@ -7,9 +7,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       enable: true
-      initial-size: 50
-      max-active: 100
-      min-idle: 50
+      initial-size: 20
+      max-active: 50
+      min-idle: 10
       max-wait: 30000
       keep-alive: true
       test-on-borrow: false
@@ -20,7 +20,7 @@ spring:
       max-evictable-idle-time-millis: 300000
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 10
-      validation-query: SELECT 'X'
+      validation-query: SELECT 1
       validation-query-timeout: 180
       filters: wall,stat,sl4j2
       db-type: mysql
