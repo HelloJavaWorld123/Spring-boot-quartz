@@ -27,7 +27,7 @@ public class CustomSchedulerConfig implements SchedulingConfigurer {
 	@Bean
 	public TaskScheduler taskScheduler(){
 		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-		scheduler.setPoolSize(20);
+		scheduler.setPoolSize(10);
 		scheduler.setWaitForTasksToCompleteOnShutdown(true);
 		scheduler.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
 		scheduler.setThreadNamePrefix("jzy-quartz-");
