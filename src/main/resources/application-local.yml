@@ -10,7 +10,7 @@ spring:
       initial-size: 50
       max-active: 100
       min-idle: 50
-      max-wait: 60000
+      max-wait: 30000
       keep-alive: true
       test-on-borrow: false
       test-on-return: false
