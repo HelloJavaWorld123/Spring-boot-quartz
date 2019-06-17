@@ -11,12 +11,15 @@ spring:
       max-active: 50
       min-idle: 10
       max-wait: 60000
+      keep-alive: true
       test-on-borrow: false
       test-on-return: false
       test-while-idle: true
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 180000
       max-evictable-idle-time-millis: 300000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 10
       validation-query: SELECT 'X'
       validation-query-timeout: 180
       filters: wall,stat,sl4j2
@@ -31,6 +34,7 @@ spring:
         enabled: true
       filter:
         wall:
+          enabled: true
           config:
             drop-table-allow: false
             multi-statement-allow: true
