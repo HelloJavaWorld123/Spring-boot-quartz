@@ -3,9 +3,7 @@ HELP.md
 .mvn
 mvnw.cmd
 mvnw
-/*.log
-/*.gz
-/*.tmp
+/log
 
 ### STS ###
 .apt_generated

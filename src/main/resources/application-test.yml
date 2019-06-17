@@ -29,6 +29,11 @@ spring:
         reset-enable: false
       web-stat-filter:
         enabled: true
+      filter:
+        wall:
+          config:
+            drop-table-allow: false
+            multi-statement-allow: true
 
 ximeipay:
   keyPath: F:\Files\jzyxm.pfx
