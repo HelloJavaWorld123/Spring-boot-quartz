@@ -7,20 +7,28 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       enable: true
-      initial-size: 50
-      max-active: 100
-      min-idle: 50
+      initial-size: 15
+      max-active: 50
+      min-idle: 10
       max-wait: 60000
       test-on-borrow: false
       test-on-return: false
       test-while-idle: true
-      time-between-eviction-runs-millis: 180000
-      min-evictable-idle-time-millis: 300000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 180000
+      max-evictable-idle-time-millis: 300000
       validation-query: SELECT 'X'
       validation-query-timeout: 180
       filters: wall,stat,sl4j2
       db-type: mysql
       async-init: true
+      stat-view-servlet:
+        enabled: true
+        login-username: root
+        login-password: root
+        reset-enable: false
+      web-stat-filter:
+        enabled: true
 
 ximeipay:
   keyPath: F:\Files\jzyxm.pfx

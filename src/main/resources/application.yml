@@ -2,7 +2,7 @@ server:
   port: 18801
 spring:
   profiles:
-    active: test
+    active: dev
 
 
 mybatis:

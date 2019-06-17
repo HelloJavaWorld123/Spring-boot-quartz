@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableTransactionManagement
 @MapperScan(annotationClass = Repository.class,basePackages = "com.jzy.quartz.mapping")
-@SpringBootApplication(scanBasePackages = {"com.jzy"},exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = {"com.jzy"})
 public class QuartzApplication {
 
 	public static void main(String[] args) {
