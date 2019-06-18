@@ -8,6 +8,7 @@ import com.jzy.quartz.model.Order;
 import com.jzy.quartz.po.OrderPO;
 import com.jzy.quartz.po.XiMeiResultPO;
 import com.jzy.quartz.service.OrderService;
+import com.jzy.quartz.utils.LogUtils;
 import com.jzy.quartz.utils.XiMeiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +28,6 @@ import java.util.stream.Collectors;
  * Version: V1.0.0
  * Desc: 处理订单相关的任务
  **/
-@Slf4j
 @Component
 public class OrderTask {
 
@@ -35,12 +37,12 @@ public class OrderTask {
 
 	/**
 	 * 修改待支付的订单 改成 订单关闭
-	 *
+	 * <p>
 	 * 每5秒钟执行一次
 	 */
 	@Scheduled(cron = "0/5 * * * * *")
 	public void closeOrder() {
-		log.info("开始查询状态为0的订单");
+		LogUtils.infoLog("开始查询状态为0的订单");
 		List<Order> orderList = orderService.findByStatus(OrderStatusEnum.UNPAY.ordinal());
 
 		//筛选大于15分钟的订单
@@ -51,13 +53,11 @@ public class OrderTask {
 
 		//数据库批量更新
 		if (CollectionUtils.isNotEmpty(changeOrderStatusAfter)) {
-			log.info("开始批量更新数据库中的数据");
+			LogUtils.infoLog("开始批量更新数据库中的数据");
 			orderService.batchUpdate(changeOrderStatusAfter);
-			log.info("批量更新数据库订单完成");
+			LogUtils.infoLog("批量更新数据库订单完成");
 		}
-
-		log.info("订单任务执行完成");
-
+		LogUtils.infoLog("订单任务执行完成");
 	}
 
 	/**
@@ -65,16 +65,16 @@ public class OrderTask {
 	 * 请求ximei 查询当前订单 退款是否成功
 	 * 成功后改变订单状态 以及 交易记录 表
 	 */
-//	@Scheduled(cron = "0/1 * * * * *")
-	@Scheduled(cron = "0 0 5 * * *")
-	public void handleOrderRefund(){
-		log.info("开始执行支付失败的订单任务");
+	@Scheduled(cron = "0/10 * * * * *")
+	//		@Scheduled(cron = "0 0 5 * * *")
+	public void handleOrderRefund() {
+		LogUtils.infoLog("Start ximei支付失败的订单 Task");
 
 		//查询使用ximei支付并且支付失败的订单
-		List<OrderPO> orders =  orderService.findByPayTypeAndStatus(PayTypeEnum.ICCARD_TYPE.ordinal(), OrderStatusEnum.RECHARGE_FAIL.ordinal(), TradeRecordStatusEnum.WAITED.ordinal(), TradeRecordTypeEnum.REFUND.ordinal());
+		List<OrderPO> orders = orderService.findByPayTypeAndStatus(PayTypeEnum.ICCARD_TYPE.ordinal(), OrderStatusEnum.RECHARGE_FAIL.ordinal(), TradeRecordStatusEnum.WAITED.ordinal(), TradeRecordTypeEnum.REFUND.ordinal());
 
-		if(CollectionUtils.isEmpty(orders)){
-			log.info("暂无可处理的订单");
+		if (CollectionUtils.isEmpty(orders)) {
+			LogUtils.infoLog("暂无可处理的订单");
 			return;
 		}
 
@@ -82,25 +82,23 @@ public class OrderTask {
 		List<OrderPO> orderPOs = XiMeiUtils.checkOrder(orders);
 
 		//批量更新订单的状态
-		if(CollectionUtils.isEmpty(orderPOs)){
+		if (CollectionUtils.isEmpty(orderPOs)) {
 			return;
 		}
 
 		List<String> orderIds = orderPOs.stream()
-									   .map(OrderPO::getOrderId)
-									   .collect(Collectors.toList());
+										.map(OrderPO::getOrderId)
+										.collect(Collectors.toList());
 
 		List<String> tradeRecordIds = orderPOs.stream()
-									   .map(OrderPO::getTradeRecordId)
-									   .collect(Collectors.toList());
+											  .map(OrderPO::getTradeRecordId)
+											  .collect(Collectors.toList());
 
 		orderService.batchUpdateOrderStatus(orderIds);
 		orderService.batchUpdateTradeRecordStatus(tradeRecordIds);
 
-		log.info("处理ximei支付失败的订单任务执行结束");
+		LogUtils.infoLog("处理ximei支付失败的订单  任务执行结束");
 	}
-
-
 
 
 	private List<Order> changeOrderStatus(List<Order> orders) {

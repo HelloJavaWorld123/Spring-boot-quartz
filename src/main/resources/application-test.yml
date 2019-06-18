@@ -38,6 +38,6 @@ spring:
           config:
             drop-table-allow: false
             multi-statement-allow: true
-
+      connect-properties: mysql.usePingMethod=false
 ximeipay:
   keyPath: F:\Files\jzyxm.pfx

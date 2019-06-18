@@ -20,7 +20,7 @@ spring:
       max-evictable-idle-time-millis: 300000
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 10
-      validation-query: SELECT 'X'
+      validation-query: SELECT 1
       validation-query-timeout: 180
       filters: wall,stat,sl4j2
       db-type: mysql

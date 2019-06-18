@@ -13,14 +13,10 @@ public class OrderPO {
 
 	private String orderId;
 
-	private Integer orderStatus;
-
 	private String outTradeNo;
 
 	private String tradeRecordId;
 
 	private String markId;
-
-	private Integer tradeRecordStatus;
 
 }
