@@ -65,8 +65,7 @@ public class OrderTask {
 	 * 请求ximei 查询当前订单 退款是否成功
 	 * 成功后改变订单状态 以及 交易记录 表
 	 */
-	@Scheduled(cron = "0/10 * * * * *")
-	//		@Scheduled(cron = "0 0 5 * * *")
+	@Scheduled(cron = "0 0 5 * * *")
 	public void handleOrderRefund() {
 		LogUtils.infoLog("Start ximei支付失败的订单 Task");
 
