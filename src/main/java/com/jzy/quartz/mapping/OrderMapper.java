@@ -34,7 +34,7 @@ public interface OrderMapper {
 
 	void batchUpdate(@Param("orderList") List<Order> changeOrderStatusAfter);
 
-    List<Order> selectByStatus(int orderStatus);
+    List<Order> findByStatus(int orderStatus);
 
 	List<OrderPO> findByTypeAndStatus(@Param("orderMethod") int orderMethod, @Param("orderStatus") int orderStatus, @Param("tradeRecordStatus") int tradeRecordStatus, @Param("tradeRecordType") int tradeRecordType);
 

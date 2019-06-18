@@ -5,13 +5,10 @@ import com.jzy.quartz.model.Order;
 import com.jzy.quartz.po.OrderPO;
 import com.jzy.quartz.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 /**
  * @author : RXK
@@ -28,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findByStatus(int orderStatus) {
-		return orderMapper.selectByStatus(orderStatus);
+		return orderMapper.findByStatus(orderStatus);
 	}
 
 	@Override
