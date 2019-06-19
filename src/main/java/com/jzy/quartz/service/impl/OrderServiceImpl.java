@@ -19,8 +19,11 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-	@Autowired
-	private OrderMapper orderMapper;
+	private final OrderMapper orderMapper;
+
+	public OrderServiceImpl(OrderMapper orderMapper) {
+		this.orderMapper = orderMapper;
+	}
 
 
 	@Override

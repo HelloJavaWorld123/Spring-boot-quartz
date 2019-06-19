@@ -32,8 +32,11 @@ import java.util.stream.Collectors;
 public class OrderTask {
 
 
-	@Autowired
-	private OrderService orderService;
+	private final OrderService orderService;
+
+	public OrderTask(OrderService orderService) {
+		this.orderService = orderService;
+	}
 
 	/**
 	 * 修改待支付的订单 改成 订单关闭
@@ -74,24 +77,24 @@ public class OrderTask {
 		List<OrderPO> orders = orderService.findByPayTypeAndStatus(PayTypeEnum.ICCARD_TYPE.ordinal(), OrderStatusEnum.RECHARGE_FAIL.ordinal(), TradeRecordStatusEnum.WAITED.ordinal(), TradeRecordTypeEnum.REFUND.ordinal());
 
 		if (CollectionUtils.isEmpty(orders)) {
-			LogUtils.infoLog("暂无可处理的订单");
+			LogUtils.infoLog("END 暂无需要退款处理的订单");
 			return;
 		}
 
 		//请求ximei支付 查询当前支付失败的订单  处理结果 并修改订单的状态
-		List<OrderPO> orderPOs = XiMeiUtils.checkOrder(orders);
+		List<OrderPO> orderPos = XiMeiUtils.checkOrder(orders);
 
 		//批量更新订单的状态
-		if (CollectionUtils.isEmpty(orderPOs)) {
+		if (CollectionUtils.isEmpty(orderPos)) {
 			LogUtils.infoLog("请求ximei后暂无可处理的订单，结束订单任务");
 			return;
 		}
 
-		List<String> orderIds = orderPOs.stream()
+		List<String> orderIds = orderPos.stream()
 										.map(OrderPO::getOrderId)
 										.collect(Collectors.toList());
 
-		List<String> tradeRecordIds = orderPOs.stream()
+		List<String> tradeRecordIds = orderPos.stream()
 											  .map(OrderPO::getTradeRecordId)
 											  .collect(Collectors.toList());
 
