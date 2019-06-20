@@ -15,8 +15,20 @@ public class LogUtils {
 		log.info("----------------"+msg+"-------------------");
 	}
 
+	public static void infoLog(String msg, String other) {
+		log.info("----------"+msg,other);
+	}
+
+	public static void infoLog(String msg, Throwable throwable) {
+		log.info(msg,throwable);
+	}
+
 	public static void errorLog(String msg){
 		log.error("---------------"+msg+"--------------------");
+	}
+
+	public static void errorLog(String msg,Throwable throwable){
+		log.error(msg,throwable);
 	}
 
 }

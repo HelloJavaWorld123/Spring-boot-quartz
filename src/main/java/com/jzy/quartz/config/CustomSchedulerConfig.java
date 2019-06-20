@@ -19,6 +19,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class CustomSchedulerConfig implements SchedulingConfigurer {
 
 
+	private final AsyncErrorHandler errorHandler;
+
+	public CustomSchedulerConfig(AsyncErrorHandler errorHandler) {
+		this.errorHandler = errorHandler;
+	}
+
+
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		taskRegistrar.setScheduler(taskScheduler());
@@ -28,6 +35,7 @@ public class CustomSchedulerConfig implements SchedulingConfigurer {
 	public TaskScheduler taskScheduler(){
 		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
 		scheduler.setPoolSize(10);
+		scheduler.setErrorHandler(errorHandler);
 		scheduler.setWaitForTasksToCompleteOnShutdown(true);
 		scheduler.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
 		scheduler.setThreadNamePrefix("jzy-quartz-");

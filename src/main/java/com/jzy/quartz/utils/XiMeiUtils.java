@@ -27,7 +27,6 @@ import java.util.List;
  * Desc:
  **/
 @Data
-@Slf4j
 @Component
 public class XiMeiUtils {
 
@@ -80,7 +79,7 @@ public class XiMeiUtils {
 					//发送post 请求
 					String result = HttpUtil.httpclientPost(postMethod);
 //					String result = HttpUtil.post(orderQueryUrl, param);
-					log.info("请求返回的结果是:{}", result);
+					LogUtils.infoLog("请求返回的结果是:{}", result);
 
 
 					if(needChangeStatus(result)){
@@ -93,7 +92,7 @@ public class XiMeiUtils {
 	private static boolean needChangeStatus(String result) {
 		if(StringUtils.isNotBlank(result)){
 			XiMeiResultPO po = JSON.parseObject(ProcessMessage.Base64Decode(result), XiMeiResultPO.class);
-			log.info("返回的结果是：{}",po.toString());
+			LogUtils.infoLog("Base64解码后的对象信息：{}",po.toString());
 			if(StringUtils.isNotBlank(po.getTranData())){
 				String resultXml = new String(ProcessMessage.Base64Decode(po.getTranData()));
 				try {
@@ -105,8 +104,7 @@ public class XiMeiUtils {
 						}
 					}
 				} catch (DocumentException e) {
-					e.printStackTrace();
-					log.info("解析String 至XML 出现异常：",e);
+					LogUtils.errorLog("解析TranData至XML出现异常：{}",e);
 					return false;
 				}
 			}
