@@ -39,7 +39,7 @@ public class CustomSchedulerConfig implements SchedulingConfigurer {
 		scheduler.setWaitForTasksToCompleteOnShutdown(true);
 		scheduler.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
 		scheduler.setThreadNamePrefix("jzy-quartz-");
-		scheduler.afterPropertiesSet();
+		scheduler.initialize();
 		return scheduler;
 	}
 

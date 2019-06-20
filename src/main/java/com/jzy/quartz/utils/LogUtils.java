@@ -2,6 +2,8 @@ package com.jzy.quartz.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 /**
  * @author : RXK
  * Date : 2019/6/18 15:41
@@ -27,8 +29,8 @@ public class LogUtils {
 		log.error("---------------"+msg+"--------------------");
 	}
 
-	public static void errorLog(String msg,Throwable throwable){
-		log.error(msg,throwable);
+	public static void errorLog(String msg, Object ... param){
+		log.error(msg,param);
 	}
 
 }

@@ -11,10 +11,10 @@ import org.springframework.util.ErrorHandler;
  * Desc:
  **/
 @Component
-public class AsyncErrorHandler implements ErrorHandler {
+public class AsyncErrorHandler implements ErrorHandler{
 
 	@Override
 	public void handleError(Throwable t) {
-		LogUtils.errorLog("异步执行出现异常：{}",t);
+		LogUtils.errorLog("任务执行中执行出现异常：",t);
 	}
 }
