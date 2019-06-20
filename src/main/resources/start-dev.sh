@@ -1,0 +1,1 @@
+nohup java -XX:ErrorFile=/server/quartz/logs/err_log.log -XX:HeapDumpPath=/server/quartz/logs/ -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGC -XX:+PrintGCDetails  -jar /server/quartz/jzy-quartz.jar --spring.profiles.active=dev --druid.mysql.usePingMethod=false &
