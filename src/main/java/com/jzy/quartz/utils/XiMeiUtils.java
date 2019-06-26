@@ -1,12 +1,7 @@
 package com.jzy.quartz.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.jzy.quartz.enums.ThirdOrderStatusEnum;
 import com.jzy.quartz.po.OrderPO;
-import com.jzy.quartz.po.XiMeiResultPO;
-import com.rrtx.mer.bean.ProcessMessage;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
@@ -16,7 +11,6 @@ import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,25 +84,25 @@ public class XiMeiUtils {
 	}
 
 	private static boolean needChangeStatus(String result) {
-		if(StringUtils.isNotBlank(result)){
-			XiMeiResultPO po = JSON.parseObject(ProcessMessage.Base64Decode(result), XiMeiResultPO.class);
-			LogUtils.infoLog("Base64解码后的对象信息：{}",po.toString());
-			if(StringUtils.isNotBlank(po.getTranData())){
-				String resultXml = new String(ProcessMessage.Base64Decode(po.getTranData()));
-				try {
-					String tranStat = getTranStat(resultXml);
-					if(StringUtils.isNotBlank(tranStat)){
-						int stat = Integer.parseInt(tranStat);
-						if(stat == ThirdOrderStatusEnum.XIMEI_REFUND_SUCCESS.getState()){
-							return true;
-						}
-					}
-				} catch (DocumentException e) {
-					LogUtils.errorLog("解析TranData至XML出现异常：{}",e);
-					return false;
-				}
-			}
-		}
+//		if(StringUtils.isNotBlank(result)){
+//			XiMeiResultPO po = JSON.parseObject(ProcessMessage.Base64Decode(result), XiMeiResultPO.class);
+//			LogUtils.infoLog("Base64解码后的对象信息：{}",po.toString());
+//			if(StringUtils.isNotBlank(po.getTranData())){
+//				String resultXml = new String(ProcessMessage.Base64Decode(po.getTranData()));
+//				try {
+//					String tranStat = getTranStat(resultXml);
+//					if(StringUtils.isNotBlank(tranStat)){
+//						int stat = Integer.parseInt(tranStat);
+//						if(stat == ThirdOrderStatusEnum.XIMEI_REFUND_SUCCESS.getState()){
+//							return true;
+//						}
+//					}
+//				} catch (DocumentException e) {
+//					LogUtils.errorLog("解析TranData至XML出现异常：{}",e);
+//					return false;
+//				}
+//			}
+//		}
 		return false;
 	}
 
@@ -117,15 +111,15 @@ public class XiMeiUtils {
 		String requestData = String.format(getRequestModel(), XiMeiUtils.merchantId, item.getOutTradeNo(), item.getMarkId());
 
 		//对请求的数据进行签名 以及 base64 编码
-		byte[] bytes = ProcessMessage.signMessage(requestData, XiMeiUtils.keyPath, XiMeiUtils.keyPassword);
-		String merSignMsg = new String(bytes, StandardCharsets.UTF_8);
-		String tranDataBase64 = ProcessMessage.Base64Encode(requestData.getBytes());
+//		byte[] bytes = ProcessMessage.signMessage(requestData, XiMeiUtils.keyPath, XiMeiUtils.keyPassword);
+//		String merSignMsg = new String(bytes, StandardCharsets.UTF_8);
+//		String tranDataBase64 = ProcessMessage.Base64Encode(requestData.getBytes());
 
 		PostMethod mypost = new PostMethod(XiMeiUtils.orderQueryUrl);
 		mypost.addParameter("interfaceName",XiMeiUtils.orderQueryInterfaceName);
 		mypost.addParameter("version", XiMeiUtils.version);
-		mypost.addParameter("tranData", tranDataBase64);
-		mypost.addParameter("merSignMsg", merSignMsg);
+//		mypost.addParameter("tranData", tranDataBase64);
+//		mypost.addParameter("merSignMsg", merSignMsg);
 		mypost.addParameter("merchantId", XiMeiUtils.merchantId);
 
 		return mypost;

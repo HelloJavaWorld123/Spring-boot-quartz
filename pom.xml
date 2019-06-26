@@ -99,37 +99,37 @@
         </dependency>
 
         <!--xiximei支付相关依赖-->
-        <dependency>
-            <groupId>payment</groupId>
-            <artifactId>merapi</artifactId>
-            <version>${merapi.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>payment</groupId>-->
+<!--            <artifactId>merapi</artifactId>-->
+<!--            <version>${merapi.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.cfca</groupId>
-            <artifactId>PKIBaseRRTX</artifactId>
-            <version>${ximei.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.topca.api</groupId>
-            <artifactId>top-certapi</artifactId>
-            <version>${ximei.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.topca.security</groupId>
-            <artifactId>top-security</artifactId>
-            <version>${ximei.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.topca</groupId>
-            <artifactId>top-commons</artifactId>
-            <version>${ximei.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.topca</groupId>
-            <artifactId>top-core</artifactId>
-            <version>${ximei.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.cfca</groupId>-->
+<!--            <artifactId>PKIBaseRRTX</artifactId>-->
+<!--            <version>${ximei.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>cn.topca.api</groupId>-->
+<!--            <artifactId>top-certapi</artifactId>-->
+<!--            <version>${ximei.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>cn.topca.security</groupId>-->
+<!--            <artifactId>top-security</artifactId>-->
+<!--            <version>${ximei.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>cn.topca</groupId>-->
+<!--            <artifactId>top-commons</artifactId>-->
+<!--            <version>${ximei.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>cn.topca</groupId>-->
+<!--            <artifactId>top-core</artifactId>-->
+<!--            <version>${ximei.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
