@@ -22,7 +22,7 @@
         <merapi.version>4.0</merapi.version>
         <dom4j.version>2.0.1</dom4j.version>
         <ximei.version>1.0</ximei.version>
-        <bcprov.version>1.60</bcprov.version>
+        <bcprov.version>1.67</bcprov.version>
         <fastjson.version>1.2.58</fastjson.version>
         <mybatis.typehandlers.version>1.0.2</mybatis.typehandlers.version>
     </properties>
